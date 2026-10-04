@@ -1,0 +1,18 @@
+# Render.com free-tier blueprint — one-click deploy
+services:
+  - type: web
+    name: email-sender
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_SECURITY
+        value: starttls
+      # Set these in the Render dashboard (Environment tab), NOT here:
+      # - key: SMTP_USER   -> you@gmail.com
+      # - key: SMTP_PASS   -> your app password  (mark as secret)
